@@ -1,0 +1,310 @@
+{
+  "generated_at": "2026-11-02T16:30:04.618750+00:00",
+  "database": "Chinook.sqlite",
+  "model": "gpt-4o-mini",
+  "note": "Correctness is checked by expected output-column presence only; semantic answer correctness requires human review.",
+  "summary": {
+    "questions": 15,
+    "generation_success": 15,
+    "validation_success": 15,
+    "execution_success": 15
+  },
+  "results": [
+    {
+      "id": "Q01",
+      "question": "List the first ten track names.",
+      "category": "simple select and limit",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0046,
+      "status": "success",
+      "columns": [
+        "Name"
+      ],
+      "sql": "SELECT Name FROM Track LIMIT 10",
+      "error": ""
+    },
+    {
+      "id": "Q02",
+      "question": "Show customers in Canada, ordered by last name.",
+      "category": "filter and sorting",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0067,
+      "status": "success",
+      "columns": [
+        "CustomerId",
+        "FirstName",
+        "LastName",
+        "Company",
+        "Address",
+        "City",
+        "State",
+        "Country",
+        "PostalCode",
+        "Phone",
+        "Fax",
+        "Email",
+        "SupportRepId"
+      ],
+      "sql": "SELECT * FROM Customer WHERE Country = ? ORDER BY LastName",
+      "error": ""
+    },
+    {
+      "id": "Q03",
+      "question": "How many albums does each artist have? Show the top ten.",
+      "category": "aggregation and group by",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns missing",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0019,
+      "status": "success",
+      "columns": [
+        "Name",
+        "AlbumCount"
+      ],
+      "sql": "SELECT Artist.Name, COUNT(Album.AlbumId) AS AlbumCount FROM Artist LEFT JOIN Album ON Artist.ArtistId = Album.ArtistId GROUP BY Artist.ArtistId ORDER BY AlbumCount DESC LIMIT 10",
+      "error": ""
+    },
+    {
+      "id": "Q04",
+      "question": "Which genre has the most tracks?",
+      "category": "join and aggregation",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0034,
+      "status": "success",
+      "columns": [
+        "Name",
+        "TrackCount"
+      ],
+      "sql": "SELECT Genre.Name, COUNT(Track.TrackId) AS TrackCount FROM Genre JOIN Track ON Genre.GenreId = Track.GenreId GROUP BY Genre.Name ORDER BY TrackCount DESC LIMIT 1",
+      "error": ""
+    },
+    {
+      "id": "Q05",
+      "question": "What is total invoice revenue for each year?",
+      "category": "date and aggregation",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns missing",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0019,
+      "status": "success",
+      "columns": [
+        "Year",
+        "TotalRevenue"
+      ],
+      "sql": "SELECT STRFTIME('%Y', InvoiceDate) AS Year, SUM(Total) AS TotalRevenue FROM Invoice GROUP BY Year",
+      "error": ""
+    },
+    {
+      "id": "Q06",
+      "question": "Show monthly revenue for 2013.",
+      "category": "date filter and group by",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0019,
+      "status": "success",
+      "columns": [
+        "Month",
+        "Revenue"
+      ],
+      "sql": "SELECT STRFTIME('%Y-%m', InvoiceDate) AS Month, SUM(Total) AS Revenue FROM Invoice WHERE STRFTIME('%Y', InvoiceDate) = ? GROUP BY Month",
+      "error": ""
+    },
+    {
+      "id": "Q07",
+      "question": "Which customers have spent more than 50 dollars?",
+      "category": "join and having",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.002,
+      "status": "success",
+      "columns": [
+        "CustomerId",
+        "FirstName",
+        "LastName"
+      ],
+      "sql": "SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId WHERE Invoice.Total > ?",
+      "error": ""
+    },
+    {
+      "id": "Q08",
+      "question": "Show the ten best-selling tracks by quantity.",
+      "category": "multi join and sorting",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0041,
+      "status": "success",
+      "columns": [
+        "Name",
+        "TotalQuantity"
+      ],
+      "sql": "SELECT Track.Name, SUM(InvoiceLine.Quantity) AS TotalQuantity FROM Track JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Track.TrackId ORDER BY TotalQuantity DESC LIMIT 10",
+      "error": ""
+    },
+    {
+      "id": "Q09",
+      "question": "Which country generated the most invoice revenue?",
+      "category": "group by and sorting",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0017,
+      "status": "success",
+      "columns": [
+        "BillingCountry",
+        "TotalRevenue"
+      ],
+      "sql": "SELECT BillingCountry, SUM(Total) AS TotalRevenue FROM Invoice GROUP BY BillingCountry ORDER BY TotalRevenue DESC LIMIT 1",
+      "error": ""
+    },
+    {
+      "id": "Q10",
+      "question": "How many customers does each employee support?",
+      "category": "self join and aggregation",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0017,
+      "status": "success",
+      "columns": [
+        "EmployeeId",
+        "FirstName",
+        "LastName",
+        "CustomerCount"
+      ],
+      "sql": "SELECT Employee.EmployeeId, Employee.FirstName, Employee.LastName, COUNT(Customer.CustomerId) AS CustomerCount FROM Employee LEFT JOIN Customer ON Employee.EmployeeId = Customer.SupportRepId GROUP BY Employee.EmployeeId",
+      "error": ""
+    },
+    {
+      "id": "Q11",
+      "question": "List artists that do not have any albums.",
+      "category": "left join and null filter",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0017,
+      "status": "success",
+      "columns": [
+        "Name"
+      ],
+      "sql": "SELECT Artist.Name FROM Artist LEFT JOIN Album ON Artist.ArtistId = Album.ArtistId WHERE Album.AlbumId IS NULL",
+      "error": ""
+    },
+    {
+      "id": "Q12",
+      "question": "Find tracks longer than the average track duration.",
+      "category": "subquery",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0223,
+      "status": "success",
+      "columns": [
+        "TrackId",
+        "Name",
+        "AlbumId",
+        "MediaTypeId",
+        "GenreId",
+        "Composer",
+        "Milliseconds",
+        "Bytes",
+        "UnitPrice"
+      ],
+      "sql": "WITH AverageDuration AS (SELECT AVG(Milliseconds) AS AvgDuration FROM Track) SELECT * FROM Track WHERE Milliseconds > (SELECT AvgDuration FROM AverageDuration)",
+      "error": ""
+    },
+    {
+      "id": "Q13",
+      "question": "Show invoices over 20 dollars from 2012, newest first.",
+      "category": "filter and sorting",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0017,
+      "status": "success",
+      "columns": [
+        "InvoiceId",
+        "CustomerId",
+        "InvoiceDate",
+        "BillingAddress",
+        "BillingCity",
+        "BillingState",
+        "BillingCountry",
+        "BillingPostalCode",
+        "Total"
+      ],
+      "sql": "SELECT * FROM Invoice WHERE Total > ? AND STRFTIME('%Y', InvoiceDate) = ? ORDER BY InvoiceDate DESC",
+      "error": ""
+    },
+    {
+      "id": "Q14",
+      "question": "How many tracks are there for each media type?",
+      "category": "join and group by",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0027,
+      "status": "success",
+      "columns": [
+        "Name",
+        "TrackCount"
+      ],
+      "sql": "SELECT MediaType.Name, COUNT(Track.TrackId) AS TrackCount FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId GROUP BY MediaType.Name",
+      "error": ""
+    },
+    {
+      "id": "Q15",
+      "question": "Show the top five countries by number of customers.",
+      "category": "group by and limit",
+      "sql_generation_success": true,
+      "sql_validation_success": true,
+      "execution_success": true,
+      "result_correctness": "expected columns present",
+      "correction_attempts": 0,
+      "execution_time_seconds": 0.0016,
+      "status": "success",
+      "columns": [
+        "Country",
+        "CustomerCount"
+      ],
+      "sql": "SELECT Country, COUNT(CustomerId) AS CustomerCount FROM Customer GROUP BY Country ORDER BY CustomerCount DESC LIMIT 5",
+      "error": ""
+    }
+  ]
+}

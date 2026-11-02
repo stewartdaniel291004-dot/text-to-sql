@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ff4c80f5908e480c9aceec3c8d884426",
+    "timestamp": "2026-11-02T16:41:51+00:00",
+    "question": "Show monthly revenue",
+    "sql": "SELECT STRFTIME('%Y-%m', InvoiceDate) AS Month, SUM(Total) AS Revenue FROM Invoice GROUP BY Month",
+    "status": "success",
+    "attempts": 0,
+    "database": "Chinook sample",
+    "favorite": false
+  },
+  {
+    "id": "4f9110101c6a4d11a81755bac62a9e6f",
+    "timestamp": "2026-11-02T16:41:17+00:00",
+    "question": "Which artist has the most albums?",
+    "sql": "SELECT Artist.Name, COUNT(Album.AlbumId) AS AlbumCount FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId GROUP BY Artist.ArtistId ORDER BY AlbumCount DESC LIMIT 1",
+    "status": "success",
+    "attempts": 0,
+    "database": "Chinook sample",
+    "favorite": false
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {"id":"Q01","question":"List the first ten track names.","expected_columns":["Name"],"category":"simple select and limit"},
+  {"id":"Q02","question":"Show customers in Canada, ordered by last name.","expected_columns":["FirstName","LastName"],"category":"filter and sorting"},
+  {"id":"Q03","question":"How many albums does each artist have? Show the top ten.","expected_columns":["ArtistId"],"category":"aggregation and group by"},
+  {"id":"Q04","question":"Which genre has the most tracks?","expected_columns":["Name"],"category":"join and aggregation"},
+  {"id":"Q05","question":"What is total invoice revenue for each year?","expected_columns":["year","revenue"],"category":"date and aggregation"},
+  {"id":"Q06","question":"Show monthly revenue for 2013.","expected_columns":["month","revenue"],"category":"date filter and group by"},
+  {"id":"Q07","question":"Which customers have spent more than 50 dollars?","expected_columns":["FirstName","LastName"],"category":"join and having"},
+  {"id":"Q08","question":"Show the ten best-selling tracks by quantity.","expected_columns":["Name"],"category":"multi join and sorting"},
+  {"id":"Q09","question":"Which country generated the most invoice revenue?","expected_columns":["BillingCountry"],"category":"group by and sorting"},
+  {"id":"Q10","question":"How many customers does each employee support?","expected_columns":["EmployeeId"],"category":"self join and aggregation"},
+  {"id":"Q11","question":"List artists that do not have any albums.","expected_columns":["Name"],"category":"left join and null filter"},
+  {"id":"Q12","question":"Find tracks longer than the average track duration.","expected_columns":["Name","Milliseconds"],"category":"subquery"},
+  {"id":"Q13","question":"Show invoices over 20 dollars from 2012, newest first.","expected_columns":["InvoiceDate","Total"],"category":"filter and sorting"},
+  {"id":"Q14","question":"How many tracks are there for each media type?","expected_columns":["Name"],"category":"join and group by"},
+  {"id":"Q15","question":"Show the top five countries by number of customers.","expected_columns":["Country"],"category":"group by and limit"}
+]
